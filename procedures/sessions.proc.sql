@@ -23,9 +23,9 @@ BEGIN
         _sessionId,
         _userId,
         _ipAddress,
-        _device,en,
+        _device,
         _accessToken,
-        _refreshToken,ken,
+        _refreshToken,
         _cratedAt 
      )
      ON DUPLICATE KEY UPDATE
