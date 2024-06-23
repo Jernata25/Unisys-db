@@ -14,7 +14,7 @@ DELIMITER ;
 DELIMITER $$
 
 CREATE OR REPLACE PROCEDURE get_banned_session_by_id(
-    IN _sessionId UUID,
+    IN _sessionId UUID
 )
 BEGIN
     SELECT * FROM session_blacklist 
@@ -26,7 +26,7 @@ DELIMITER ;
 DELIMITER $$
 
 CREATE OR REPLACE PROCEDURE get_banned_session_by_token(
-    IN _token VARCHAR(512),
+    IN _token VARCHAR(512)
 )
 BEGIN
     SELECT s.* FROM session_blacklist sb
