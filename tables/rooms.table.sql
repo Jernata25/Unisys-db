@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS rooms(
+    roomId UUID NOT NULL PRIMARY KEY UUID(),
+    roomName CHAR(20) NOT NULL
+);
