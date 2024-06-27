@@ -8,5 +8,4 @@ CREATE TABLE IF NOT EXISTS careers_subjects(
     FOREIGN KEY (careerId) REFERENCES careers(careerId),
     CONSTRAINT FK_subjectId_careers_subjects
     FOREIGN KEY (subjectId) REFERENCES subjects(subjectId)
-
 );
