@@ -62,3 +62,39 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+DELIMITER $$
+
+CREATE OR REPLACE PROCEDURE delete_session_by_id(
+    _sessionId UUID
+)
+BEGIN
+    DELETE FROM sessions
+    WHERE sessions.sessionId = _sessionId;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE OR REPLACE PROCEDURE delete_session_by_token(
+    _token VARCHAR(512)
+)
+BEGIN
+    DELETE FROM sessions
+    WHERE sessions.accessToken = _token OR sessions.refreshToken = _token;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE OR REPLACE PROCEDURE clear_sessions_by_user_id(
+    _userId VARCHAR(512)
+)
+BEGIN
+    DELETE FROM sessions
+    WHERE sessions.userId = _userId;
+END$$
+
+DELIMITER ;
