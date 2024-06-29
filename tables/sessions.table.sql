@@ -16,7 +16,6 @@ CREATE TABLE session_blacklist (
     sessionBlacklistId UUID NOT NULL PRIMARY KEY DEFAULT UUID(),
     sessionId UUID NOT NULL,
     createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     CONSTRAINT FK_sessionId_session_blacklist
     FOREIGN KEY (sessionId) REFERENCES sessions(sessionId)
     ON DELETE CASCADE
