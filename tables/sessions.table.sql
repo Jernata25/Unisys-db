@@ -9,6 +9,7 @@ CREATE TABLE sessions (
     updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     CONSTRAINT FK_userId_sessions 
     FOREIGN KEY(userId) REFERENCES users(userId)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE session_blacklist (
@@ -18,4 +19,5 @@ CREATE TABLE session_blacklist (
     updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     CONSTRAINT FK_sessionId_session_blacklist
     FOREIGN KEY (sessionId) REFERENCES sessions(sessionId)
+    ON DELETE CASCADE
 );

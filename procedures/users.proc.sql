@@ -39,7 +39,7 @@ BEGIN
         informationId,
         _names,
         _surnames,
-        _gender
+        _gender,
         _dateOfBirth,
         _email,
         _phoneNumber 
@@ -70,7 +70,7 @@ BEGIN
     ) 
     ON DUPLICATE KEY UPDATE
     nickname = VALUES(nickname),
-    passwd = VALUES(nickname),
+    passwd = VALUES(passwd),
     userRole = VALUES(userRole),
     createdAt = CURRENT_TIMESTAMP();
 END$$
