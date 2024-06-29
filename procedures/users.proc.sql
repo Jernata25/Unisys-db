@@ -72,7 +72,7 @@ BEGIN
     nickname = VALUES(nickname),
     passwd = VALUES(nickname),
     userRole = VALUES(userRole),
-    createdAt = CURRENT_TIMESTAMP();
+    updatedAt = CURRENT_TIMESTAMP();
 END$$
 
 DELIMITER ;
