@@ -3,6 +3,7 @@ DELIMITER $$
 CREATE OR REPLACE PROCEDURE create_or_update_user(
     IN _userId UUID,
     IN _nickname VARCHAR(50),
+    IN _passwd VARCHAR(72),
     IN _userRole CHAR(20),
     IN _createdAt DATETIME,
     IN _names VARCHAR(50),
@@ -53,6 +54,7 @@ BEGIN
 
     INSERT INTO users(
         userId,
+        passwd,
         userInformationId,
         nickname,
         userRole,
@@ -60,6 +62,7 @@ BEGIN
     )
     VALUES (
         _userId,
+        _passwd,
         informationId,
         _nickname,
         _userRole,
@@ -67,6 +70,7 @@ BEGIN
     ) 
     ON DUPLICATE KEY UPDATE
     nickname = VALUES(nickname),
+    passwd = VALUES(nickname),
     userRole = VALUES(userRole),
     createdAt = CURRENT_TIMESTAMP();
 END$$
