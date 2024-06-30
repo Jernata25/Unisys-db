@@ -3,8 +3,8 @@ CREATE TABLE sessions (
     userId UUID NOT NULL,
     ipAddress CHAR(21) NOT NULL,
     device VARCHAR(30) NOT NULL DEFAULT 'UNKNOWN',
-    accessToken VARCHAR(512) NOT NULL,
-    refreshToken VARCHAR(512) NOT NULL,
+    accessToken VARCHAR(1500) NOT NULL,
+    refreshToken VARCHAR(1500) NOT NULL,
     cratedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     CONSTRAINT FK_userId_sessions 
