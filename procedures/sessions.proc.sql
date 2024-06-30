@@ -5,8 +5,8 @@ CREATE OR REPLACE PROCEDURE create_or_update_session(
     IN _userId UUID,
     IN _ipAddress CHAR(21),
     IN _device VARCHAR(30),
-    IN _accessToken VARCHAR(512),
-    IN _refreshToken VARCHAR(512),
+    IN _accessToken VARCHAR(1500),
+    IN _refreshToken VARCHAR(1500),
     IN _cratedAt DATETIME 
 )
 BEGIN
@@ -78,7 +78,7 @@ DELIMITER ;
 DELIMITER $$
 
 CREATE OR REPLACE PROCEDURE delete_session_by_token(
-    _token VARCHAR(512)
+    _token VARCHAR(1500)
 )
 BEGIN
     DELETE FROM sessions
