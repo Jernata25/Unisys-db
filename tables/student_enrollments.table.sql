@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS student_enrollments(
     addressId UUID NOT NULL,
     careerId UUID NOT NULL,
     universityHeadquartersId UUID NOT NULL,
-    studentEnrollmentCode CHAR(14) NOT NULL DEFAULT gen_enrollment_code(),
+    studentEnrollmentCode CHAR(14) NOT NULL UNIQUE DEFAULT gen_enrollment_code(),
     academicRegime VARCHAR(50) NOT NULL,
     studyPlan VARCHAR(50) NOT NULL, 
     paymentNumber VARCHAR(20) DEFAULT 'DESCONOCIDO',
