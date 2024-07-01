@@ -6,6 +6,7 @@ CREATE OR REPLACE PROCEDURE create_or_update_user(
     IN _passwd VARCHAR(72),
     IN _userRole CHAR(20),
     IN _createdAt DATETIME,
+    IN _updatedAt DATETIME,
     IN _names VARCHAR(50),
     IN _surnames VARCHAR(50),
     IN _dateOfBirth DATETIME,
@@ -72,7 +73,7 @@ BEGIN
     nickname = VALUES(nickname),
     passwd = VALUES(passwd),
     userRole = VALUES(userRole),
-    updatedAt = CURRENT_TIMESTAMP();
+    updatedAt = IF(_updatedAt IS NULL, CURRENT_TIMESTAMP(), _updatedAt);
 END$$
 
 DELIMITER ;
