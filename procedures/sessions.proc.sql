@@ -7,7 +7,8 @@ CREATE OR REPLACE PROCEDURE create_or_update_session(
     IN _device VARCHAR(30),
     IN _accessToken VARCHAR(1500),
     IN _refreshToken VARCHAR(1500),
-    IN _cratedAt DATETIME 
+    IN _cratedAt DATETIME,
+    IN _updatedAt DATETIME
 )
 BEGIN
     INSERT INTO sessions(
@@ -31,7 +32,7 @@ BEGIN
      ON DUPLICATE KEY UPDATE
         ipAddress = VALUES(ipAddress),
         accessToken = VALUES(accessToken),
-        updatedAt = CURRENT_TIMESTAMP(); 
+        updatedAt = IF(_updatedAt IS NULL, CURRENT_TIMESTAMP(), _updatedAt);
 END$$
 
 DELIMITER ;
