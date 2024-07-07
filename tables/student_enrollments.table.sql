@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS student_enrollments(
     addressId UUID NOT NULL,
     careerId UUID NOT NULL,
     universityHeadquartersId UUID NOT NULL,
-    studentEnrollmentCode CHAR(14) NOT NULL UNIQUE DEFAULT gen_enrollment_code(),
+    studentEnrollmentCode CHAR(14) NOT NULL UNIQUE,
     academicRegime VARCHAR(50) NOT NULL,
     studyPlan VARCHAR(50) NOT NULL, 
     paymentNumber VARCHAR(20) DEFAULT 'DESCONOCIDO',
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS student_enrollments_meta_data (
     fatherInformationId UUID,
     motherInformationId UUID,
     spouseInformationId UUID,
-    numberOfChildren UNSIGNED INT,
+    numberOfChildren INT UNSIGNED,
     dominantHand ENUM('DERECHA', 'IZQUIERDA'),
     healthIssuesDescription VARCHAR(250),
     CONSTRAINT FK_fatherAddressId_student_enrollments_meta_data 

@@ -39,15 +39,26 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE OR REPLACE PROCEDURE get_sessions_by_id_or_user(
-    IN _sessionId UUID,
+CREATE OR REPLACE PROCEDURE get_sessions_by_user(
     IN _userId UUID,
     IN _nickname VARCHAR(50)
 )
 BEGIN
     SELECT s.* FROM sessions s
     INNER JOIN users u ON s.userId = u.userId
-    WHERE s.sessionId = _sessionId OR s.userId = _userId OR u.nickname = _nickname;
+    WHERE s.userId = _userId OR u.nickname = _nickname;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE OR REPLACE PROCEDURE get_session_by_id(
+    IN _sessionId UUID
+)
+BEGIN
+    SELECT * FROM sessions
+    WHERE sessions.sessionId = _sessionId;
 END$$
 
 DELIMITER ;

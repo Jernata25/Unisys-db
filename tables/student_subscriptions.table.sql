@@ -19,5 +19,5 @@ CREATE TABLE IF NOT EXISTS student_subscriptions_subjects(
     CONSTRAINT FK_studentSubscriptionId_student_subscriptions_subjects
     FOREIGN KEY(studentSubscriptionId) REFERENCES student_subscriptions(studentSubscriptionId),
     CONSTRAINT FK_subjectId_student_subscriptions_subjects
-    FOREIGN KEY(subjectId) REFERENCES careers(subjectId)
+    FOREIGN KEY(subjectId) REFERENCES subjects(subjectId)
 );
