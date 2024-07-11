@@ -3,8 +3,8 @@ DELIMITER $$
 CREATE OR REPLACE PROCEDURE create_or_update_session(
     IN _sessionId UUID,
     IN _userId UUID,
-    IN _ipAddress CHAR(21),
-    IN _device VARCHAR(30),
+    IN _ipAddress CHAR(23),
+    IN _agent VARCHAR(800),
     IN _accessToken VARCHAR(1500),
     IN _refreshToken VARCHAR(1500),
     IN _cratedAt DATETIME,
@@ -15,7 +15,7 @@ BEGIN
         sessionId,
         userId,
         ipAddress,
-        device,
+        agent,
         accessToken,
         refreshToken,
         cratedAt 
@@ -24,7 +24,7 @@ BEGIN
         _sessionId,
         _userId,
         _ipAddress,
-        _device,
+        _agent,
         _accessToken,
         _refreshToken,
         _cratedAt 
