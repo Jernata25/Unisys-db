@@ -7,7 +7,7 @@ CREATE OR REPLACE PROCEDURE create_or_update_session(
     IN _agent VARCHAR(800),
     IN _accessToken VARCHAR(1500),
     IN _refreshToken VARCHAR(1500),
-    IN _cratedAt DATETIME,
+    IN _createdAt DATETIME,
     IN _updatedAt DATETIME
 )
 BEGIN
@@ -18,7 +18,7 @@ BEGIN
         agent,
         accessToken,
         refreshToken,
-        cratedAt 
+        createdAt 
     ) 
     VALUES (
         _sessionId,
@@ -27,7 +27,7 @@ BEGIN
         _agent,
         _accessToken,
         _refreshToken,
-        _cratedAt 
+        _createdAt 
      )
      ON DUPLICATE KEY UPDATE
         ipAddress = VALUES(ipAddress),
