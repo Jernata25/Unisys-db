@@ -52,7 +52,7 @@ BEGIN
         _addressId,
         _careerId,
         _universityHeadquartersId,
-        _studentEnrollmentCode,
+        IF(_studentEnrollmentCode IS NULL, gen_student_enrollment(), _studentEnrollmentCode),
         _academicRegime,
         _studyPlan,
         _paymentNumber,
