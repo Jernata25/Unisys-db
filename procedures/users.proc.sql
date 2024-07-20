@@ -1,9 +1,12 @@
 DELIMITER $$
+
 CREATE OR REPLACE PROCEDURE create_or_update_user(
     IN _userId UUID,
     IN _nickname VARCHAR(50),
+    IN _passwd VARCHAR(72),
     IN _userRole CHAR(20),
     IN _createdAt DATETIME,
+    IN _updatedAt DATETIME,
     IN _names VARCHAR(50),
     IN _surnames VARCHAR(50),
     IN _dateOfBirth DATETIME,
@@ -12,42 +15,66 @@ CREATE OR REPLACE PROCEDURE create_or_update_user(
     IN _phoneNumber VARCHAR(16)
 )
 BEGIN
-    INSERT INTO users(
-        userId,
-        nickname,
-        userRole,
-        createdAt,
+    DECLARE informationId UUID;
+    DECLARE storedInformationId UUID;
+
+    SELECT userInformationId INTO storedInformationId 
+    FROM users WHERE users.userId = _userId; 
+
+    IF storedInformationId IS NOT NULL THEN
+        SET informationId = storedInformationId;
+    ELSE 
+        SET informationId = UUID();
+    END IF;
+
+    INSERT INTO user_information(
+        userInformationId,
         names,
         surnames,
-        dateOfBirth,
         gender,
+        dateOfBirth,
         email,
-        phoneNumbe
+        phoneNumber 
+    )
+    VALUES(
+        informationId,
+        _names,
+        _surnames,
+        _gender,
+        _dateOfBirth,
+        _email,
+        _phoneNumber 
+    )
+    ON DUPLICATE KEY UPDATE
+    names = VALUES(names),
+    surnames = VALUES(surnames),
+    gender = VALUES(gender),
+    dateOfBirth = VALUES(dateOfBirth),
+    email = VALUES(email),
+    phoneNumber = VALUES(phoneNumber);
+
+    INSERT INTO users(
+        userId,
+        passwd,
+        userInformationId,
+        nickname,
+        userRole,
+        createdAt
     )
     VALUES (
         _userId,
+        _passwd,
+        informationId,
         _nickname,
         _userRole,
-        _createdAt,
-        _names,
-        _surnames,
-        _dateOfBirth,
-        _gender,
-        _email,
-        _phoneNumber
+        _createdAt
     ) 
     ON DUPLICATE KEY UPDATE
     nickname = VALUES(nickname),
+    passwd = VALUES(passwd),
     userRole = VALUES(userRole),
-    names = VALUES(names),
-    surnames = VALUES(surnames),
-    dateOfBirth = VALUES(dateOfBirth),
-    gender = VALUES(gender),
-    email = VALUES(email),
-    phoneNumber = VALUES(phoneNumber);
-    updatedAt = CURRENT_TIMESTAMP();
-END;
-$$
+    updatedAt = IF(_updatedAt IS NULL, CURRENT_TIMESTAMP(), _updatedAt);
+END$$
 
 DELIMITER ;
 
@@ -81,16 +108,20 @@ DELIMITER $$
 
 CREATE OR REPLACE PROCEDURE search_user_by_name(
     _nicknameLike VARCHAR(50),
+    _withUserInfo BOOLEAN,
     _order TEXT
 )
 BEGIN
-    DECLARE dynamicQuery TEXT;
+    DECLARE dynamicQuery TEXT DEFAULT 'SELECT u.*' ;
     IF validate_order(_order) THEN
-        SET dynamicQuery =  CONCAT('SELECT * FROM users WHERE nickname LIKE ? ORDER BY nickname ', _order);
-        PREPARE stmt FROM dynamicQuery;
-        EXECUTE stmt USING CONCAT('%', _nicknameLike, '%');
-        DEALLOCATE PREPARE stmt;
-     ELSE
+        SET dynamicQuery = CONCAT(
+            dynamicQuery,
+            IF(_withUserInfo, ', i.* FROM users u INNER JOIN user_information i ON u.userInformationId = i.userInformationId', ' FROM users u'),
+            ' WHERE nickname LIKE ? ORDER BY nickname ',
+            _order
+        );
+        EXECUTE IMMEDIATE dynamicQuery USING CONCAT('%', _nicknameLike, '%');
+    ELSE
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid order parameter';
     END IF;
 END;
