@@ -121,7 +121,7 @@ BEGIN
             _order
         );
         EXECUTE IMMEDIATE dynamicQuery USING CONCAT('%', _nicknameLike, '%');
-     ELSE
+    ELSE
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid order parameter';
     END IF;
 END;
